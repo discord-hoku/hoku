@@ -1,29 +1,28 @@
-var {Client} = require('discord.js')
-var startCommandListener = require('./Commands/startCommandListener.js')
+var Discord = require('discord.js')
+var startCommandListener = require('./commands/startCommandListener.js')
 
 class HokuClient {
-    constructor(token, opts) {
-        this.DiscordClient = new Client()
+    constructor(token, options) {
+        this.discord = new Discord.Client()
 
         this.token = token
 
-        if (!opts) {throw "You need to declare a second arg to the Client class named Opts"}
+        if (!options) options = {};
 
-        this.opts = opts
+        this.options = options
         
-        if (!this.opts.prefix) this.opts.prefix = '!'
-        if (!this.opts.commandsDir) this.opts.commandsDir = 'commands'
-        if (!this.opts.categories) throw 'You need to give to Opts an proprety named `category`' 
+        if (!this.options.prefix) this.options.prefix = undefined // will only respond to mentions
+        if (!this.options.commandsDir) this.options.commandsDir = 'commands'
 
-        startCommandListener(this)   
+        startCommandListener(this);
     }
 
     login() {
-        return this.DiscordClient.login(this.token)
+        return this.discord.login(this.token)
     }
 
     on() {
-        return this.DiscordClient.on
+        return this.discord.on
     }
 }
 
