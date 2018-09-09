@@ -3,5 +3,6 @@ module.exports.run = function(client, message, args) {
 }
 
 module.exports.config = {
-    aliases: ["hello", "pong"]
+    aliases: ["hello", "pong"],
+    ownerOnly: true
 }

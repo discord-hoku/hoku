@@ -16,6 +16,7 @@ module.exports = async function (client) {
         if (msg.match(`^<@!?${client.discord.user.id}> `)) command = args.shift();
         
         try {
+            if (require(commands[command])) if (require(commands[command]).config) if (require(commands[command]).config.ownerOnly && !client.options.owners.includes(message.author.id)) return message.channel.send(client.options.messages.ownerOnly ? client.options.messages.ownerOnly(message, cmd) : 'You can\'t run the command!')
             require(commands[command]).run(client, message, args);
         } catch (e) {
             if (require(comands[command])) console.error(e); // command failed
