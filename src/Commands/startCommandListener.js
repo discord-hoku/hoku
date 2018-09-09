@@ -21,6 +21,14 @@ module.exports = async function (client) {
         if (command in commands) cmd = require(commands[command])
         else if (command in aliases) cmd = require(aliases[command])
         else return 0;
+
+        console.log(client.options.owners.includes(message.author.id))
+        console.log(cmd.config.ownerOnly)
+
+        if (cmd.config.ownerOnly && client.options.owners.includes(message.author.id)) {
+            console.log('ss')
+            return message.channel.send(client.options.messages.ownerOnly ? client.options.messages.ownerOnly(message, cmd) : 'You can\'t run the command!')
+        }
         
         try {
             cmd.run(client, message, args);

@@ -4,7 +4,8 @@ module.exports.run = function (client, message, args) {
 
 module.exports.config = {
     aliases: ["hello", "pong"],
-    name: 'ping'
+    name: 'ping',
+    ownerOnly: true
 }
 
 /*module.exports.help = {
