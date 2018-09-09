@@ -7,7 +7,7 @@ module.exports = async (client) => {
         fs.readdirSync(dir).forEach(async file => {
             if (file.endsWith(".js")) {
                 var commandFile = require(dir + file)
-                commands[file.replace(".js", "")] = dir + file
+                commands[commandFile.config.name ? commandFile.config.name : file.replace(".js", "")] = dir + file
                 if (commandFile.config) if (commandFile.config.aliases) {
                     commandFile.config.aliases.forEach(alias => {
                         commands[alias] = dir + file
