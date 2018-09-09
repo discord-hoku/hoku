@@ -1,9 +1,7 @@
 const getCommands = require('./GetCommands.js');
 
 module.exports = async function (client) {
-    var cmds = await getCommands(client);
-    let commands = cmds.commands
-    let aliases = cmds.aliases
+    var commands = await getCommands(client)
 
     client.discord.on('message', async message => {
 
@@ -17,23 +15,14 @@ module.exports = async function (client) {
         if (!(msg.startsWith(client.options.prefix) || msg.match(`^<@!?${client.discord.user.id}> `))) return;
         if (msg.match(`^<@!?${client.discord.user.id}> `)) command = args.shift();
 
-        let cmd
-        if (command in commands) cmd = require(commands[command])
-        else if (command in aliases) cmd = require(aliases[command])
-        else return 0;
 
-        console.log(client.options.owners.includes(message.author.id))
-        console.log(cmd.config.ownerOnly)
-
-        if (cmd.config.ownerOnly && client.options.owners.includes(message.author.id)) {
-            console.log('ss')
-            return message.channel.send(client.options.messages.ownerOnly ? client.options.messages.ownerOnly(message, cmd) : 'You can\'t run the command!')
-        }
         
         try {
-            cmd.run(client, message, args);
+            if (require(commands[command])) if (require(commands[command]).config) if (require(commands[command]).config.ownerOnly && !client.options.owners.includes(message.author.id)) return message.channel.send(client.options.messages.ownerOnly ? client.options.messages.ownerOnly(message, cmd) : 'You can\'t run the command!')
+            require(commands[command]).run(client, message, args);
         } catch (e) {
-            console.log(e)
+            if (require(comands[command])) console.error(e); // command failed
+            return; // command doesn't exist
         }
     })
 }
