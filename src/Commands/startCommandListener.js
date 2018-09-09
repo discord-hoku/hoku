@@ -1,38 +1,31 @@
-/*var GetCommands = require('./GetCommands')
+const getCommands = require('./GetCommands.js');
 
-module.exports = async (Client) => {
-    var commands = GetCommands(Client)
-    Client.DiscordClient.on('message', (message) => {
-        if (message.author.bot) return;
-        
-        const args = message.content.slice(Client.opts.prefix.length).trim().split(" ");
-        const command = args.shift().toLowerCase();
-        
-        commands.forEach(c => {
-            if (c.config.name === command) {
-                c.run(message, args, Client.DiscordClient)
-            }
-        })
-        
-    })
-}*/
+module.exports = async function (client) {
+    var cmds = await getCommands(client);
+    let commands = cmds.commands
+    let aliases = cmds.aliases
 
-const getCommands = require('./getCommands.js');
-
-module.exports = async function(client) {
-    const commands = await getCommands(client);
     client.discord.on('message', async message => {
 
         if (message.author.bot) return;
-    
+
         let msg = message.content;
-        let content = message.content.slice(client.opts.prefix.length).split(" ")
+        let content = message.content.slice(client.options.prefix.length).split(" ")
         let args = content.slice(1)
         let command = content[0]
-    
-        if (!(msg.startsWith(client.opts.prefix.length) || msg.match(`^<@!?${client.discord.user.id}> `))) return; // if it doesnt start with the prefix or mention, do not process it as a command
+
+        if (!(msg.startsWith(client.options.prefix) || msg.match(`^<@!?${client.discord.user.id}> `))) return;
         if (msg.match(`^<@!?${client.discord.user.id}> `)) command = args.shift();
+
+        let cmd
+        if (command in commands) cmd = require(commands[command])
+        else if (command in aliases) cmd = require(aliases[command])
+        else return 0;
         
-        if (commands[command]) try { require(commands[command]).run(client, message, args); } catch(e) { console.log(e) }
+        try {
+            cmd.run(client, message, args);
+        } catch (e) {
+            console.log(e)
+        }
     })
 }
