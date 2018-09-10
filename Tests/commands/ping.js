@@ -1,8 +1,17 @@
-module.exports.run = function(client, message, args) {
-    message.channel.send('Pong')
-}
+var Command = require(``)
 
-module.exports.config = {
-    aliases: ["hello", "pong"],
-    ownerOnly: true
-}
+class PingCommand extends Command {
+    constructor(client) {
+        name: "ping",
+        aliases: ["pong"],
+        ownerOnly: false,
+        nsfw: false,
+        guildOnly: false
+    }
+    
+    async function run() {
+        return message.channel.send(`Pong! ${message.client.ping}ms.`);
+    }
+};
+
+module.exports = PingCommand;
