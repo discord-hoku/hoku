@@ -1,4 +1,4 @@
-var Command = require(``)
+var {Command} = require('../src/index')
 
 class PingCommand extends Command {
     constructor(client) {
