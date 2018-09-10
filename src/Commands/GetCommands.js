@@ -1,4 +1,5 @@
 const fs = require("fs");
+const Command = require('./parseCommand')
 
 module.exports = async (client) => {
     let commands = {};
@@ -7,19 +8,29 @@ module.exports = async (client) => {
         fs.readdirSync(dir).forEach(async file => {
             if (file.endsWith(".js")) {
                 var commandFile = require(dir + file)
-                commands[commandFile.config.name ? commandFile.config.name : file.replace(".js", "")] = dir + file
-                if (commandFile.config) if (commandFile.config.aliases) {
-                    commandFile.config.aliases.forEach(alias => {
-                        commands[alias] = dir + file
-                    })
+
+                const command = Command(commandFile)
+                if (!command.name) { 
+                    command.name = file.replace(".js", "")
                 }
-            }
-            else if (!file.includes(".") || file != "_disabled") await loadCommands(dir + file + "/"); 
+
+                commands[command.name] = command
+
+                if (command.config)
+                    if (command.config.aliases) {
+                        command.config.aliases.forEach(alias => {
+                            commands[alias] = dir + file
+                        })
+                }
+                
+            } else if (!file.includes(".") || file != "_disabled") await loadCommands(dir + file + "/");
         });
         return;
     }
 
     await loadCommands(process.cwd() + "/" + client.options.commandsDir + '/');
+
+    console.log(commands)
 
     return commands;
 }

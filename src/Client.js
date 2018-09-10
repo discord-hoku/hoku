@@ -15,6 +15,7 @@ class HokuClient {
         if (!this.options.commandsDir) this.options.commandsDir = 'commands'
 
         startCommandListener(this);
+
     }
 
     login() {

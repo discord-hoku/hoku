@@ -16,10 +16,11 @@ module.exports = async function (client) {
         if (msg.match(`^<@!?${client.discord.user.id}> `)) command = args.shift();
         
         try {
-            if (require(commands[command])) if (require(commands[command]).config) if (require(commands[command]).config.ownerOnly && !client.options.owners.includes(message.author.id)) return message.channel.send(client.options.messages.ownerOnly ? client.options.messages.ownerOnly(message, cmd) : 'You can\'t run the command!')
-            require(commands[command]).run(client, message, args);
+            if (commands[command].ownerOnly && !client.owners.includes(message.author.id)) return message.channel.send(client.options.messages.ownerOnly ? client.options.messages.ownerOnly(message, cmd) : 'You can\'t run the command!')
+            commands[command].run(client, message, args);
+            this.discord.emit('commandRun', command, message)
         } catch (e) {
-            if (require(comands[command])) console.error(e); // command failed
+            this.discord.emit('commandError', err, command, message)
             return; // command doesn't exist
         }
     })
