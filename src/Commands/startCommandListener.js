@@ -17,7 +17,15 @@ module.exports = async function (client) {
         
         try {
             if (commands[command].ownerOnly && !client.owners.includes(message.author.id)) return message.channel.send(client.options.messages.ownerOnly ? client.options.messages.ownerOnly(message, cmd) : 'You can\'t run the command!')
-            commands[command].run(client, message, args);
+            try {
+                commands[command].run(client, message, args);
+            } catch (e) {
+                var c = []
+                client.options.owners.forEach(o => {
+                    s.push(client.users.get(String(o)).username + '#' + client.users.get(String(o)).discriminator)
+                })
+                message.channel.send('The command trigerred an error: `' + e + '`' + '\nContact ' + c.join(', ') + ' and report this error!')
+            }
             this.discord.emit('commandRun', command, message)
         } catch (e) {
             this.discord.emit('commandError', err, command, message)
