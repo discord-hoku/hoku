@@ -1,1 +1,3 @@
 # hoku
+
+Discord.js framework
