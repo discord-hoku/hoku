@@ -26,9 +26,7 @@ module.exports = async function (client) {
                 })
                 message.channel.send('The command trigerred an error: `' + e + '`' + '\nContact ' + c.join(', ') + ' and report this error!')
             }
-            this.discord.emit('commandRun', command, message)
         } catch (e) {
-            this.discord.emit('commandError', err, command, message)
             return; // command doesn't exist
         }
     })

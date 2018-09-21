@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^11.4.2",
+    "discordtools": "^2.0.29",
     "fs": "0.0.1-security"
   },
   "repository": "https://github.com/ndr3w221/hoku"

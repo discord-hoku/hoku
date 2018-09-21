@@ -1,11 +1,14 @@
 var Discord = require('discord.js')
+var DiscordTools = require('discordtools')
+
 var startCommandListener = require('./Commands/startCommandListener.js')
 
 class HokuClient {
     constructor(token, options) {
-        this.discord = new Discord.Client()
-
         this.token = token
+
+        this.discord = new Discord.Client()
+        this.tools = new DiscordTools.Client(this.token);
 
         if (!options) options = {};
 

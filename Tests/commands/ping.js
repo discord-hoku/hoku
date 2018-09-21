@@ -1,6 +1,7 @@
 var PingCommand = {
     run: (client, message) => {
-        throw 'HI!'
+        message.channel.send('hi!')
+      //  throw 'HI!'
     }
 }
 
