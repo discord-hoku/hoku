@@ -30,7 +30,5 @@ module.exports = async (client) => {
 
     await loadCommands(process.cwd() + "/" + client.options.commandsDir + '/');
 
-    console.log(commands)
-
     return commands;
 }

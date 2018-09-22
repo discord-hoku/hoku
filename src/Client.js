@@ -25,8 +25,8 @@ class HokuClient {
         return this.discord.login(this.token)
     }
 
-    on() {
-        return this.discord.on
+    on(...args) {
+        return this.discord.on(...args)
     }
 }
 

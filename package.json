@@ -1,7 +1,7 @@
 {
-  "name": "huko",
+  "name": "hoku",
   "version": "0.0.1",
-  "description": "",
+  "description": "Discord.js framework",
   "main": "src/index.js",
   "scripts": {
     "test": "node Tests/test.js"
@@ -13,5 +13,13 @@
     "discordtools": "^2.0.29",
     "fs": "0.0.1-security"
   },
-  "repository": "https://github.com/ndr3w221/hoku"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ndr3w221/hoku.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ndr3w221/hoku/issues"
+  },
+  "homepage": "https://github.com/ndr3w221/hoku#readme",
+  "devDependencies": {}
 }
