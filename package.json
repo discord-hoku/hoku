@@ -1,10 +1,11 @@
 {
   "name": "hoku",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Discord.js framework",
   "main": "src/index.js",
   "scripts": {
-    "test": "node Tests/test.js"
+    "test": "node Tests/test.js",
+    "jsdoc": "jsdoc ./src"
   },
   "author": "ndr3w221 <kalaz.bb@gmail.com>",
   "license": "ISC",
@@ -21,5 +22,7 @@
     "url": "https://github.com/ndr3w221/hoku/issues"
   },
   "homepage": "https://github.com/ndr3w221/hoku#readme",
-  "devDependencies": {}
+  "devDependencies": {
+    "jsdoc": "^3.5.5"
+  }
 }
