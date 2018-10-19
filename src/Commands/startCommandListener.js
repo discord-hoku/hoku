@@ -16,7 +16,10 @@ module.exports = async function (client) {
         if (msg.match(`^<@!?${client.discord.user.id}> `)) command = args.shift();
         
         try {
-            if (commands[command].ownerOnly && !client.owners.includes(message.author.id)) return message.channel.send(client.options.messages.ownerOnly ? client.options.messages.ownerOnly(message, cmd) : 'You can\'t run the command!')
+            var cmd = commands[command]
+            if (cmd.ownerOnly && !client.owners.includes(message.author.id)) return message.channel.send(client.options.messages.ownerOnly ? client.options.messages.ownerOnly(message, cmd) : 'You can\'t run the command!')
+            if (message.channel.nsfw && cmd.nsfw !== true) return 0;  
+
             try {
                 commands[command].run(client, message, args);
             } catch (e) {

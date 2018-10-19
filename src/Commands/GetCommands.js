@@ -1,5 +1,4 @@
 const fs = require("fs");
-const Command = require('./parseCommand')
 
 module.exports = async (client) => {
     let commands = {};
@@ -7,9 +6,10 @@ module.exports = async (client) => {
     async function loadCommands(dir) {
         fs.readdirSync(dir).forEach(async file => {
             if (file.endsWith(".js")) {
-                var commandFile = require(dir + file)
+                var command = require(dir + file)
 
-                const command = Command(commandFile)
+                console.log(command)
+
                 if (!command.name) { 
                     command.name = file.replace(".js", "")
                 }

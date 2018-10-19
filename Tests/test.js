@@ -1,6 +1,6 @@
 var hoku = require('../src/index')
 
-var client = new hoku.Client('fu', { // stop leaking the token
+var client = new hoku.Client('NDk1NTM3MjUzOTUxNDcxNjE4.Dquz4A.6C1ss0Hi_eSstJPqJJ8wffMaQAk', { // stop leaking the token
     prefix: 'h!', // if the there isn't the prefix, it will respond only to mention
     commandsDir: 'Tests/commands', // default is "commands"
     owners: ['408953935223717898'], // your user id

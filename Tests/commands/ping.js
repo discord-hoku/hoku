@@ -1,8 +1,7 @@
-var PingCommand = {
+var Command = require('../../src').Command
+var ping = new Command({
     run: (client, message) => {
-        message.channel.send('hi!')
-      //  throw 'HI!'
+        message.channel.send('pong')
     }
-}
-
-module.exports = PingCommand
+})
+module.exports = ping
