@@ -17,8 +17,11 @@ module.exports = async function (client) {
         
         try {
             var cmd = commands[command]
-            if (cmd.ownerOnly && !client.owners.includes(message.author.id)) return message.channel.send(client.options.messages.ownerOnly ? client.options.messages.ownerOnly(message, cmd) : 'You can\'t run the command!')
-            if (message.channel.nsfw && cmd.nsfw !== true) return 0;  
+            if (cmd.ownerOnly && !client.owners.includes(message.author.id)) return 0
+            if (message.channel.nsfw !== true && cmd.nsfw == true) return 0;  
+            if (message.channel.type == 'dm' && cmd.guildOnly == true) return 0; 
+            if (message.channel.type !== 'dm' && cmd.dmOnly == true) return 0; 
+
 
             try {
                 commands[command].run(client, message, args);

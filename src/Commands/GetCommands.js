@@ -8,8 +8,6 @@ module.exports = async (client) => {
             if (file.endsWith(".js")) {
                 var command = require(dir + file)
 
-                console.log(command)
-
                 if (!command.name) { 
                     command.name = file.replace(".js", "")
                 }
