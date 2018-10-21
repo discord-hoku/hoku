@@ -10,3 +10,8 @@ Hoku is a modular, modern, easy-to-use Discord.js framework.
 ```shell
 $ npm i hoku
 ```
+
+## Links
+
+NPM: https://npmjs.com/package/hoku
+GitHub: https://github.com/ndr3w221/hoku
