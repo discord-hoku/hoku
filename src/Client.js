@@ -5,7 +5,7 @@ var startCommandListener = require('./Commands/StartCommandListener.js');
 /**
  * @extends {Client}
  */
-class HokuClient extends Discord.Client() {
+class HokuClient extends Discord.Client {
 
     /**
      * HokuClient Options

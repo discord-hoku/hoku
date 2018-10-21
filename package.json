@@ -10,7 +10,6 @@
   "author": "ndr3w221 <kalaz.bb@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^11.4.2",
     "discordtools": "^2.0.29",
     "fs": "0.0.1-security"
   },
@@ -23,6 +22,7 @@
   },
   "homepage": "https://github.com/ndr3w221/hoku#readme",
   "devDependencies": {
+    "discord.js": "^11.4.2",
     "jsdoc": "^3.5.5"
   }
 }
