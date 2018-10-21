@@ -5,7 +5,7 @@ var startCommandListener = require('./Commands/StartCommandListener.js');
 /**
  * @extends {Client}
  */
-class HokuClient extends Discord.Client {
+class HokuClient {
 
     /**
      * HokuClient Options
@@ -16,7 +16,9 @@ class HokuClient extends Discord.Client {
      * @returns {object}
      */
     constructor(token, options = {}) {
+        super();
         this.token = token;
+        this.discord = new Discord.Client();
         this.tools = new DiscordTools.Client(this.token);
         this.options = options;
 
@@ -49,7 +51,11 @@ class HokuClient extends Discord.Client {
      * Start the bot.
      */
     connect() {
-        return this.login(this.token);
+        return this.discord.login(this.token);
+    }
+
+    on(event, listener) {
+        return this.discord.on(event, listener);
     }
 }
 
