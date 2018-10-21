@@ -1,39 +1,38 @@
 var Discord = require('discord.js');
 var DiscordTools = require('discordtools');
-var startCommandListener = require('./Commands/startCommandListener.js');
+var startCommandListener = require('./Commands/StartCommandListener.js');
 
 /**
  * @extends {Client}
  */
-class HokuClient extends Discord.Client {
+class HokuClient extends Discord.Client() {
 
     /**
      * HokuClient Options
      * @param {object} [options]
      * @param {string} [options.prefix=null] Prefix, Optional, Default will respond only to mention
      * @param {string} [options.commandsDir=/commands] The directory where to store the commands, Optional, Default is /commands
-     * @param {Array} [options.owner=null] Owner. 
+     * @param {Array} [options.owners=null] Owner. 
      * @returns {object}
      */
     constructor(token, options = {}) {
         this.token = token;
-
-        /**
-         * Discord Tools
-         */
         this.tools = new DiscordTools.Client(this.token);
-
-        /**
-         * HokuClient Options.
-         */
         this.options = options;
 
         if (!options) options = {};
         if (typeof options.prefix === 'undefined') options.prefix = '';
-        if (typeof options.owner === 'undefined') options.owner = null;
-        if (!options.commandsDir) this.options.commandsDir = 'commands';
-
+        if (typeof options.owners === 'undefined') options.owner = null;
+        if (typeof options.commandsDir === 'undefined') this.options.commandsDir = 'commands';
         startCommandListener(this);
+    }
+
+    /**
+     * @type {string}
+     */
+    get prefix() {
+        if (typeof this.options.prefix === 'undefined' || typeof this.options.prefix === null) throw new Error('NO prefix has been set.');
+        return this.options.prefix;
     }
 
     /**

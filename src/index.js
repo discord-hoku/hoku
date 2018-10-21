@@ -1,4 +1,7 @@
 module.exports = {
     Client: require('./Client'),
-    Command: require('./Commands/Command')
+    HokuClient: require('./Client'),
+    Command: require('./Commands/Command'),
+    
+    version: require('../package.json').version
 };
