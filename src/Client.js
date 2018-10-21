@@ -12,6 +12,7 @@ class HokuClient extends Discord.Client {
      * @param {object} [options]
      * @param {string} [options.prefix=null] Prefix, Optional, Default will respond only to mention
      * @param {string} [options.commandsDir=/commands] The directory where to store the commands, Optional, Default is /commands
+     * @param {Array} [options.owner=null] Owner. 
      * @returns {object}
      */
     constructor(token, options = {}) {
@@ -29,6 +30,7 @@ class HokuClient extends Discord.Client {
 
         if (!options) options = {};
         if (typeof options.prefix === 'undefined') options.prefix = '';
+        if (typeof options.owner === 'undefined') options.owner = null;
         if (!options.commandsDir) this.options.commandsDir = 'commands';
 
         startCommandListener(this);
@@ -37,7 +39,7 @@ class HokuClient extends Discord.Client {
     /**
      */
     get owners() {
-        if (!this.options.owner) return null;
+        if (!this.options.owners) return null;
         if (typeof this.options.owner === 'string') return [this.users.get(this.options.owner)];
         const owners = [];
         for (const owner of this.options.owner) owners.push(this.users.get(owner));
@@ -48,7 +50,7 @@ class HokuClient extends Discord.Client {
      * Start the bot.
      */
     connect() {
-        return this().login(this.token);
+        return this.login(this.token);
     }
 }
 
