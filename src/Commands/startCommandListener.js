@@ -15,7 +15,7 @@ module.exports = async function (client) {
         if (!(msg.startsWith(client.options.prefix) || msg.match(`^<@!?${client.discord.user.id}> `))) return;
         if (msg.match(`^<@!?${client.discord.user.id}> `)) command = args.shift();
         
-        try {
+        if (command in commands) {
             var cmd = commands[command]
             if (cmd.ownerOnly && !client.owners.includes(message.author.id)) return 0
             if (message.channel.nsfw !== true && cmd.nsfw == true) return 0;  
@@ -32,8 +32,6 @@ module.exports = async function (client) {
                 })
                 message.channel.send('The command trigerred an error: `' + e + '`' + '\nContact ' + c.join(', ') + ' and report this error!')
             }
-        } catch (e) {
-            return; // command doesn't exist
         }
     })
 }
