@@ -14,7 +14,7 @@ class HokuClient extends Discord.Client {
      * @param {string} [options.commandsDir=/commands] The directory where to store the commands, Optional, Default is /commands
      * @returns {object}
      */
-    constructor(token, options= {}) {
+    constructor(token, options = {}) {
         this.token = token;
 
         /**
@@ -35,20 +35,21 @@ class HokuClient extends Discord.Client {
     }
 
     /**
-     * Start the bot.
      */
-    login() {
-        return this.discord.login(this.token)
+    get owners() {
+        if (!this.options.owner) return null;
+        if (typeof this.options.owner === 'string') return [this.users.get(this.options.owner)];
+        const owners = [];
+        for (const owner of this.options.owner) owners.push(this.users.get(owner));
+        return owners;
     }
 
     /**
-     * 
-     * @param {string} eventName 
-     * @param {function} cb 
+     * Start the bot.
      */
-    on(eventName, cb) {
-        return this.discord.on(eventName, cb)
+    connect() {
+        return this().login(this.token);
     }
 }
 
-module.exports = HokuClient
+module.exports = HokuClient;
