@@ -28,7 +28,7 @@ module.exports = async function (client) {
             } catch (e) {
                 var c = []
                 client.options.owners.forEach(o => {
-                    s.push(client.users.get(String(o)).username + '#' + client.users.get(String(o)).discriminator)
+                    c.push(client.users.get(String(o)).username + '#' + client.users.get(String(o)).discriminator)
                 })
                 message.channel.send('The command trigerred an error: `' + e + '`' + '\nContact ' + c.join(', ') + ' and report this error!')
             }
