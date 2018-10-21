@@ -16,7 +16,6 @@ class HokuClient {
      * @returns {object}
      */
     constructor(token, options = {}) {
-        super();
         this.token = token;
         this.discord = new Discord.Client();
         this.tools = new DiscordTools.Client(this.token);
