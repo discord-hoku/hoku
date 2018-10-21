@@ -5,7 +5,7 @@ module.exports = async function (client) {
 
     client.discord.on('message', async message => {
 
-        if (message.author.bot) return;
+        if (message.author.bot) return undefined;
 
         let msg = message.content;
         let content = message.content.slice(client.options.prefix.length).split(" ")

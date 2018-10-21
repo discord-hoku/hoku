@@ -1,48 +1,41 @@
-var Discord = require('discord.js')
-var DiscordTools = require('discordtools')
-
-var startCommandListener = require('./Commands/startCommandListener.js')
+var Discord = require('discord.js');
+var DiscordTools = require('discordtools');
+var startCommandListener = require('./Commands/startCommandListener.js');
 
 /**
- * Hoku.Client
- * @class
- * @param {string} token The Application's Token
- * @param {object} options HokuClient Options
- * @param {string} [options.prefix=Respond only to mention] Prefix, Optional, Default will respond only to mention
- * @param {string} [options.commandsDir=/commands] The directory where to store the commands, Optional, Default is /commands
- * 
- * @returns {object} 
+ * @extends {Client}
  */
-class HokuClient {
-    constructor(token, options) {
-        this.token = token
+class HokuClient extends Discord.Client {
 
-        /**
-         * Discord.js Propreties
-         */
-        this.discord = new Discord.Client()
+    /**
+     * HokuClient Options
+     * @param {object} [options]
+     * @param {string} [options.prefix=null] Prefix, Optional, Default will respond only to mention
+     * @param {string} [options.commandsDir=/commands] The directory where to store the commands, Optional, Default is /commands
+     * @returns {object}
+     */
+    constructor(token, options= {}) {
+        this.token = token;
 
         /**
          * Discord Tools
          */
         this.tools = new DiscordTools.Client(this.token);
 
-        if (!options) options = {};
-
         /**
-         * Options of the bot
+         * HokuClient Options.
          */
-        this.options = options
-        
-        if (!this.options.prefix) this.options.prefix = undefined // will only respond to mentions
-        if (!this.options.commandsDir) this.options.commandsDir = 'commands'
+        this.options = options;
+
+        if (!options) options = {};
+        if (typeof options.prefix === 'undefined') options.prefix = '';
+        if (!options.commandsDir) this.options.commandsDir = 'commands';
 
         startCommandListener(this);
-
     }
 
     /**
-     * Start the bot
+     * Start the bot.
      */
     login() {
         return this.discord.login(this.token)
