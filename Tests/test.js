@@ -1,6 +1,6 @@
 var Hoku = require('../src/index');
 
-var client = new Hoku.Client('NDM1NzQyNzg3NDU1OTQyNjc2.Dq5ZOw.oUbiYArgBtEb--a-VkWK2HUHEsw', { // Client token,
+var client = new Hoku.Client(process.env.HOKU_TOKEN, { // Client token,
   prefix: 'h!', // If prefix is not provided, it will respond only to mention.
   commandsDir: 'Tests/commands', // Default commands directory name is "commands"
   owners: [], // your user id
@@ -9,4 +9,4 @@ var client = new Hoku.Client('NDM1NzQyNzg3NDU1OTQyNjc2.Dq5ZOw.oUbiYArgBtEb--a-Vk
   }
 });
 
-client.connect('NDM1NzQyNzg3NDU1OTQyNjc2.Dq5ZOw.oUbiYArgBtEb--a-VkWK2HUHEsw');
+client.connect(process.env.CLIENT_TOKEN);
