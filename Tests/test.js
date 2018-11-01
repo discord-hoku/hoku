@@ -9,4 +9,4 @@ var client = new Hoku.Client('NDM1NzQyNzg3NDU1OTQyNjc2.Dq5ZOw.oUbiYArgBtEb--a-Vk
   }
 });
 
-client.connect('NDM1NzQyNzg3NDU1OTQyNjc2.Dq5ZOw.oUbiYArgBtEb--a-VkWK2HUHEsw');
+client.connect();
