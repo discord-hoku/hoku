@@ -5,7 +5,7 @@ var startCommandListener = require('./Commands/StartCommandListener.js');
 /**
  * @extends {Client}
  */
-class HokuClient {
+class HokuClient extends Discord.Client {
 
     /**
      * HokuClient Options
@@ -15,48 +15,33 @@ class HokuClient {
      * @param {Array} [options.owners=null] Owner. 
      * @returns {object}
      */
-    constructor(token, options = {}) {
-        this.token = token;
-        this.discord = new Discord.Client();
+    constructor(options = {}) {
 
-        this.broadcats = this.discord.broadcasts
-        this.browser = this.discord.browser
-        this.channels = this.discord.channels
-        this.emojis = this.discord.emojis
-        this.guilds = this.discord.guilds
-        this.ping = this.discord.ping
-        this.pings = this.discord.pings
-        // this.presences = this.discord.presences
-        this.readyAt = this.discord.readyAt
-        this.readyTimestamp = this.discord.readyTimestamp
-        this.shard = this.discord.shard
-        this.status = undefined
-        this.uptime = this.discord.uptime
-        this.user = this.discord.user
-        this.users = this.discord.users
-        this.voiceConnections = this.discord.voiceConnections
+        super()
 
-        this.tools = new DiscordTools.Client(this.token);
-        this.options = {...options, ...this.discord.options};
+        this.options = {...options, ...this.options};
 
         if (!options) options = {};
-        if (typeof options.prefix === 'undefined') options.prefix = '';
-        if (typeof options.owners === 'undefined') options.owner = null;
-        if (typeof options.commandsDir === 'undefined') this.options.commandsDir = 'commands';
+        if (typeof options.prefix === 'undefined') this.options.prefix = '';
+        if (typeof options.owners === 'undefined') this.options.owner = null;
 
-        this.discord.on('ready', () => {
+        require('./utils/checkDirectorySync')('commands')
+        require('./utils/checkDirectorySync')('events')
+
+        require('./Events/runEvents')(this)
+
+        this.on('ready', () => {
             startCommandListener(this);
-            this.status = this.discord.status
+            this.tools = new DiscordTools.Client(this.token);
+
         })
-        
-        /// this.status = this.discord.status
     }
 
     /**
      * @type {string}
      */
     get prefix() {
-        if (typeof this.options.prefix === 'undefined' || typeof this.options.prefix === null) throw new Error('NO prefix has been set.');
+        if (typeof this.options.prefix === 'undefined' || typeof this.options.prefix === null) throw new Error('No prefix has been set.');
         return this.options.prefix;
     }
 
@@ -68,73 +53,6 @@ class HokuClient {
         const owners = [];
         for (const owner of this.options.owner) owners.push(this.users.get(owner));
         return owners;
-    }
-
-    /**
-     * Start the bot.
-     */
-    connect() {
-        return this.discord.login(this.token);
-    }
-
-    on(event, listener) {
-        return this.discord.on(event, listener);
-    }
-
-    clearInterval(interval) {
-        return this.discord.clearInterval(interval)
-    }
-
-    clearTimeout(timeout) {
-        return this.discord.clearTimeout(timeout)
-    }
-
-    createVoiceBroadcast() {
-        return this.discord.createVoiceBroadcast()
-    }
-
-    destory() {
-        return this.discord.distroy()
-    }
-
-    fetchApplication(id) {
-        return this.fetchApplication(id)
-    }
-
-    fetchInvite(invite) {
-        return this.fetchInvite(invite);
-    }
-
-    fetchUser(id, cache) {
-        return this.discord.fetchUser(id, cache)
-    }
-
-    fetchVoiceRegions() {
-        return this.discord.fetchVoiceRegions()
-    }
-
-    fetchWebook(id, reason) {
-        return this.discord.fetchWebhook(id, reason)
-    }
-
-    generateInvite(perms) {
-        return this.discord.generateInvite(perms) 
-    }
-
-    setInterval(fn, delay, ...args) {
-        return this.discord.setInterval(fn, delay, ...args)
-    }
-
-    setTimeout(fn, delay, ...args) {
-        return this.discord.setTimeout(fn, delay, ...args)
-    }
-
-    sweepMessages(lifetime) {
-        return this.discord.sweepMessages(lifetime)
-    }
-
-    syncGuilds(guilds) {
-        return this.discord.syncGuilds(guilds)
     }
 }
 

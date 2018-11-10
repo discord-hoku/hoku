@@ -9,8 +9,8 @@ module.exports = async function (client) {
         let content = message.content.slice(client.options.prefix.length).split(' ');
         let args = content.slice(1);
         let command = content[0];
-        if (!(message.content.startsWith(client.options.prefix) || message.content.match(`^<@!?${client.discord.user.id}> `))) return;
-        if (message.content.match(`^<@!?${client.discord.user.id}> `)) command = args.shift();
+        if (!(message.content.startsWith(client.options.prefix) || message.content.match(`^<@!?${client.user.id}> `))) return;
+        if (message.content.match(`^<@!?${client.user.id}> `)) command = args.shift();
 
         if (command in commands) {
             var cmd = commands[command];
