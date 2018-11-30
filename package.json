@@ -10,7 +10,6 @@
   "author": "ndr3w221 <kalaz.bb@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "discordtools": "^2.0.29",
     "fs": "0.0.1-security"
   },
   "repository": {
