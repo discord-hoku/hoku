@@ -1,5 +1,4 @@
 var Discord = require('discord.js');
-var DiscordTools = require('discordtools');
 var startCommandListener = require('./Commands/StartCommandListener.js');
 
 /**
@@ -32,8 +31,6 @@ class HokuClient extends Discord.Client {
 
         this.on('ready', () => {
             startCommandListener(this);
-            this.tools = new DiscordTools.Client(this.token);
-
         })
     }
 
