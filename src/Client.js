@@ -1,11 +1,10 @@
 var Discord = require('discord.js');
-var DiscordTools = require('discordtools');
 var startCommandListener = require('./Commands/StartCommandListener.js');
 
 /**
  * @extends {Client}
  */
-class HokuClient {
+class HokuClient extends Discord.Client {
 
     /**
      * HokuClient Options
@@ -15,24 +14,31 @@ class HokuClient {
      * @param {Array} [options.owners=null] Owner. 
      * @returns {object}
      */
-    constructor(token, options = {}) {
-        this.token = token;
-        this.discord = new Discord.Client();
-        this.tools = new DiscordTools.Client(this.token);
-        this.options = options;
+    constructor(options = {}) {
+
+        super()
+
+        this.options = {...options, ...this.options};
 
         if (!options) options = {};
-        if (typeof options.prefix === 'undefined') options.prefix = '';
-        if (typeof options.owners === 'undefined') options.owner = null;
-        if (typeof options.commandsDir === 'undefined') this.options.commandsDir = 'commands';
-        startCommandListener(this);
+        if (typeof options.prefix === 'undefined') this.options.prefix = '';
+        if (typeof options.owners === 'undefined') this.options.owner = null;
+
+        require('./utils/checkDirectorySync')('commands')
+        require('./utils/checkDirectorySync')('events')
+
+        require('./Events/runEvents')(this)
+
+        this.on('ready', () => {
+            startCommandListener(this);
+        })
     }
 
     /**
      * @type {string}
      */
     get prefix() {
-        if (typeof this.options.prefix === 'undefined' || typeof this.options.prefix === null) throw new Error('NO prefix has been set.');
+        if (typeof this.options.prefix === 'undefined' || typeof this.options.prefix === null) throw new Error('No prefix has been set.');
         return this.options.prefix;
     }
 
@@ -44,17 +50,6 @@ class HokuClient {
         const owners = [];
         for (const owner of this.options.owner) owners.push(this.users.get(owner));
         return owners;
-    }
-
-    /**
-     * Start the bot.
-     */
-    connect() {
-        return this.discord.login(this.token);
-    }
-
-    on(event, listener) {
-        return this.discord.on(event, listener);
     }
 }
 

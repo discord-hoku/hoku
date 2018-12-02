@@ -7,6 +7,7 @@ module.exports = async (client) => {
         fs.readdirSync(dir).forEach(async (file) => {
             if (file.endsWith('.js')) {
                 var command = require(dir + file);
+                if (command.enabled) {
                 if (!command.name) command.name = file.replace('.js', '');
                 commands[command.name] = command;
 
@@ -16,11 +17,12 @@ module.exports = async (client) => {
                             commands[alias] = dir + file;
                         })
                     }
+                }
             } else if (!file.includes('.') || file != '_disabled') await loadCommands(dir + file + '/');
         });
         return;
     }
 
-    await loadCommands(process.cwd() + '/' + client.options.commandsDir + '/');
+    await loadCommands(process.cwd() + '/commands/');
     return commands;
 }
